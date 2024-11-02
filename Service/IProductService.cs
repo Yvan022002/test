@@ -6,5 +6,6 @@ namespace WebApplication1.Service
     {
         public List<ProductDto> getAll();
         public ProductDto getById(string id);
+        public void Create(string name, string description, decimal preice);
     }
 }

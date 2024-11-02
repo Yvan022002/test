@@ -1,20 +1,27 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication1.Models;
+using WebApplication1.Service;
 
 namespace WebApplication1.Controllers
 {
     public class ProductController : Controller
     {
-        // GET: ProductController
-        public ActionResult Index()
+        private readonly IProductService _productService;
+        public ProductController(IProductService productService)
         {
-            return View();
+            _productService = productService;
+        }
+        // GET: ProductController
+        public ActionResult GetAll()
+        {
+            return View(_productService.getAll());
         }
 
         // GET: ProductController/Details/5
-        public ActionResult Details(int id)
+        public ActionResult GetById(string id)
         {
-            return View();
+            return View(_productService.getById(id));
         }
 
         // GET: ProductController/Create
@@ -26,10 +33,11 @@ namespace WebApplication1.Controllers
         // POST: ProductController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(string name, string description, decimal price)
         {
             try
             {
+                _productService.Create(name, description, price);
                 return RedirectToAction(nameof(Index));
             }
             catch

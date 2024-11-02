@@ -22,5 +22,9 @@ namespace WebApplication1.Service
             var product= _productRepository.GetById(id);
             return new ProductDto(product.Name, product.Description, product.Price);
         }
+        public void Create(string name, string description, decimal price)
+        {
+            _productRepository.CreateProduct(name, description, price);
+        }
     }
 }
