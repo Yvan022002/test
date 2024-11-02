@@ -5,14 +5,22 @@ namespace WebApplication1.Service
 {
     public class ProductService : IProductService
     {
+        private readonly IProductRepository _productRepository;
+        public ProductService(IProductRepository productRepository)
+        {
+            _productRepository = productRepository;
+        }
         public List<ProductDto> getAll()
         {
-            throw new NotImplementedException();
+            var products= _productRepository.GetAll();
+            return products.Select(p => new ProductDto(p.Name, p.Description, p.Price)).ToList();
+
         }
 
-        public ProductDto getById(int id)
+        public ProductDto getById(string id)
         {
-            throw new NotImplementedException();
+            var product= _productRepository.GetById(id);
+            return new ProductDto(product.Name, product.Description, product.Price);
         }
     }
 }
